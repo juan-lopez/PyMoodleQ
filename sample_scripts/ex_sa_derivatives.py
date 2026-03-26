@@ -4,13 +4,13 @@ import re
 
 # Constants
 AMOUNTOFQUESTIONS = 10
-HIGHESTEXPONENT = 2 # Keep this >= 2
+HIGHESTEXPONENT = 2 # Keep this > 1
 MINCOEFFICIENT = -9
 MAXCOEFFICIENT = 9
 
 def generate_polynomial():
     coefficient = get_coefficient(plusSign = False, nonZero = True) # Leading coefficient
-    polynomial = f"{coefficient}x^{HIGHESTEXPONENT}"
+    polynomial = f"{coefficient}x^{HIGHESTEXPONENT}" # Assumed that HIGHESTEXPONENT > 1
     for term in range(HIGHESTEXPONENT-1, 1, -1):
         coefficient = get_coefficient(nonZero = True)
         polynomial += f"{coefficient}x^{term}"
@@ -102,9 +102,6 @@ def derive_polynomial(poly_str):
 theQuiz = pymoodleq.Quiz()
 theQuiz.add_category("Derivatives")
 
-# Generate derivative exercises for quadratic expressions
-# We'll vary all three coefficients over a small range of values
-# Can be improved to avoid -1x^2 or +1x
 for i in range(AMOUNTOFQUESTIONS):
     polynomial = generate_polynomial()
     derivative = derive_polynomial(polynomial)
@@ -115,4 +112,4 @@ for i in range(AMOUNTOFQUESTIONS):
     question.add_answer(100, derivative, "Correct!")
     theQuiz.add_question(question)
 
-theQuiz.write("ex_sa_derivatives2.xml")
+theQuiz.write("ex_sa_derivatives.xml")
